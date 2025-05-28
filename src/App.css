@@ -1,0 +1,98 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-section input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.input-section button {
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.input-section button:hover {
+    background: #0056b3;
+}
+
+.todos-section ul,
+.done-section ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 16px;
+}
+
+.todo-item,
+.done-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.done-section button {
+    margin-top: 16px;
+    padding: 10px 16px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.done-section button:hover {
+    background-color: #218838;
+}
+
+.todo-item span {
+    flex-grow: 1;
+}
+
+.todo-item .actions button {
+    margin-left: 8px;
+    padding: 6px 10px;
+    border: none;
+    background: #6c757d;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.todo-item .actions button:hover {
+    background: #495057;
+}
+
+.done-item {
+    text-decoration: line-through;
+    color: gray;
+}
