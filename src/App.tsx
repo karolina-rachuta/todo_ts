@@ -1,25 +1,31 @@
 import React, { useState } from 'react';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
+
+interface Task {
+    id: number | string,
+    value: string
+}
 
 function App() {
-    const [note, setNote] = useState("");
-    const [notes, setNotes] = useState<string[]>([]);
-    const [doneTasks, setDoneTasks] = useState<string[]>([]);
+    const [task, setTask] = useState<Task>({ id: 0, value: '' });
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [doneTasks, setDoneTasks] = useState<Task[]>([]);
     const [hide, setHide] = useState(false);
 
     function handleAddingNote(): void {
-        if (!note.trim()) return;
-        setNotes([...notes, note]);
-        setNote('');
+        if (!task) return;
+        setTasks([...tasks, task]);
+        setTask({ id: 0, value: '' });
     }
 
-    function handleDelete(idToDelete: number): void {
-        setNotes(notes.filter((_, index) => index !== idToDelete));
+    function handleDelete(idToDelete: number | string): void {
+        setTasks(tasks.filter((task) => task.id !== idToDelete));
     }
 
-    function handleDoneTasks(idDoneTask: number, note: string): void {
-        setDoneTasks([...doneTasks, note]);
-        setNotes(notes.filter((_, index) => index !== idDoneTask));
+    function handleDoneTasks(idDoneTask: number | string, value: string): void {
+        setDoneTasks([...doneTasks, { id: idDoneTask, value: value }]);
+        setTasks(tasks.filter((task) => task.id !== idDoneTask));
     }
 
     return (
@@ -30,10 +36,10 @@ function App() {
                 <input
                     type="text"
                     placeholder='todo'
-                    name="notes"
-                    id="notes"
-                    value={note}
-                    onChange={(e) => setNote(e.target.value)}
+                    name="tasks"
+                    id="tasks"
+                    value={task?.value}
+                    onChange={(e) => setTask({ ...task, value: e.target.value, id: uuidv4() })}
                 />
                 <button type="button" onClick={handleAddingNote}>Add</button>
             </div>
@@ -41,12 +47,12 @@ function App() {
             <div className="todos-section">
                 <h2>List of todos:</h2>
                 <ul>
-                    {notes.map((note, index) => (
-                        <li key={index} className="todo-item">
-                            <span>{note}</span>
+                    {tasks.map((task) => (
+                        <li key={task.id} className="todo-item">
+                            <span>{task.value}</span>
                             <div className="actions">
-                                <button type="button" onClick={() => handleDelete(index)}>delete</button>
-                                <button type='button' onClick={() => handleDoneTasks(index, note)}>done</button>
+                                <button type="button" onClick={() => handleDelete(task.id)}>delete</button>
+                                <button type='button' onClick={() => handleDoneTasks(task.id, task.value)}>done</button>
                             </div>
                         </li>
                     ))}
@@ -61,8 +67,8 @@ function App() {
                     <div>
                         <h2>Done tasks:</h2>
                         <ul>
-                            {doneTasks.map((task, index) => (
-                                <li key={index} className="done-item">{task}</li>
+                            {doneTasks.map(({ id, value }) => (
+                                <li key={id} className="done-item">{value}</li>
                             ))}
                         </ul>
                     </div>
