@@ -4,19 +4,28 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface Task {
     id: number | string,
-    value: string
+    value: string,
+}
+
+type selectedTasks = {
+    [id: Task["id"]]: boolean
 }
 
 function App() {
-    const [task, setTask] = useState<Task>({ id: 0, value: '' });
+    const [task, setTask] = useState<Task>();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [doneTasks, setDoneTasks] = useState<Task[]>([]);
     const [hide, setHide] = useState(false);
+    const [selectedTasks, setSelectedTasks] = useState<selectedTasks>({});
 
     function handleAddingNote(): void {
         if (!task) return;
         setTasks([...tasks, task]);
         setTask({ id: 0, value: '' });
+    }
+
+    function handleSelect(idToSelect: number | string): void {
+        setSelectedTasks(prev => ({ ...prev, [idToSelect]: !prev[idToSelect] }))
     }
 
     function handleDelete(idToDelete: number | string): void {
@@ -48,9 +57,10 @@ function App() {
                 <h2>List of todos:</h2>
                 <ul>
                     {tasks.map((task) => (
-                        <li key={task.id} className="todo-item">
+                        <li key={task.id} className={selectedTasks[task.id] ? "todo-item selected" : "todo-item"}>
                             <span>{task.value}</span>
                             <div className="actions">
+                                <button type="button" onClick={() => handleSelect(task.id)}>selected</button>
                                 <button type="button" onClick={() => handleDelete(task.id)}>delete</button>
                                 <button type='button' onClick={() => handleDoneTasks(task.id, task.value)}>done</button>
                             </div>
