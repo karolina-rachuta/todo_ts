@@ -2,39 +2,45 @@ import React, { useState } from 'react';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 
-interface Task {
-    id: number | string,
+type TaskStatus = 'new' | 'in progress' | 'done' //3 columns
+
+type Task = {
+    id: string,
     value: string,
+    status: TaskStatus
 }
 
-type selectedTasks = {
-    [id: Task["id"]]: boolean
-}
+type SelectedTasks = Record<string, boolean>
+//helpers fincion to updated the status
+//ask chatgpt how it can be improve in a smart way as a senior react developer to upgrade this, optimize performance ect
 
 function App() {
-    const [task, setTask] = useState<Task>();
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [task, setTask] = useState<Task | null>(null);
+    const [existingTasks, setExistingTasks] = useState<Task[]>([]);
     const [doneTasks, setDoneTasks] = useState<Task[]>([]);
     const [hide, setHide] = useState(false);
-    const [selectedTasks, setSelectedTasks] = useState<selectedTasks>({});
+    const [selectedTasks, setSelectedTasks] = useState<SelectedTasks>({});
+
 
     function handleAddingNote(): void {
         if (!task) return;
-        setTasks([...tasks, task]);
-        setTask({ id: 0, value: '' });
+        setExistingTasks([...existingTasks, task]);
+        setTask(null); //fixed clearing the input
+
     }
 
-    function handleSelect(idToSelect: number | string): void {
+    function handleSelect(idToSelect: string): void {
         setSelectedTasks(prev => ({ ...prev, [idToSelect]: !prev[idToSelect] }))
     }
 
-    function handleDelete(idToDelete: number | string): void {
-        setTasks(tasks.filter((task) => task.id !== idToDelete));
+    function handleDelete(idToDelete: string): void {
+        // setExistingTasks(existingTasks.filter((task) => task.id !== idToDelete)); // update 
+        setExistingTasks(prev => prev.filter((task) => task.id !== idToDelete)); //what is the difference // based on what was previously there
     }
 
-    function handleDoneTasks(idDoneTask: number | string, value: string): void {
-        setDoneTasks([...doneTasks, { id: idDoneTask, value: value }]);
-        setTasks(tasks.filter((task) => task.id !== idDoneTask));
+    function handleDoneTasks(idDoneTask: string, value: string): void {
+        setDoneTasks([...doneTasks, { id: idDoneTask, value: value, status: 'done' }]);
+        setExistingTasks(existingTasks.filter((task) => task.id !== idDoneTask));
     }
 
     return (
@@ -47,8 +53,9 @@ function App() {
                     placeholder='todo'
                     name="tasks"
                     id="tasks"
-                    value={task?.value}
-                    onChange={(e) => setTask({ ...task, value: e.target.value, id: uuidv4() })}
+                    // value={task?.value ?? ''}
+                    value={task ? task.value : ''}
+                    onChange={(e) => setTask({ ...task, value: e.target.value, id: uuidv4(), status: 'done' })}
                 />
                 <button type="button" onClick={handleAddingNote}>Add</button>
             </div>
@@ -56,7 +63,7 @@ function App() {
             <div className="todos-section">
                 <h2>List of todos:</h2>
                 <ul>
-                    {tasks.map((task) => (
+                    {existingTasks.map((task) => (
                         <li key={task.id} className={selectedTasks[task.id] ? "todo-item selected" : "todo-item"}>
                             <span>{task.value}</span>
                             <div className="actions">
