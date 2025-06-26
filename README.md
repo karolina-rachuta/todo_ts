@@ -4,5 +4,3 @@
 
 -   Typescript
 -   CSS
-
-## DEMO
