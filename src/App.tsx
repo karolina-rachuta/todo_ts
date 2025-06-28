@@ -31,8 +31,9 @@ function App() {
 
     }
 
-    function handleSelect(idToSelect: string): void {
-        setSelectedTasks(prev => ({ ...prev, [idToSelect]: !prev[idToSelect] }))
+    function handleSelect(idToSelect: string, taskSelected: boolean): void {
+        // setSelectedTasks(prev => ({ ...prev, [idToSelect]: !prev[idToSelect] }))
+        setExistingTasks(prev => prev.map(task => task.id === idToSelect ? { ...task, selected: !taskSelected } : task))
     }
 
     function handleChangeTaskStatus(e: React.ChangeEvent<HTMLSelectElement>, taskId: string): void {
@@ -73,10 +74,10 @@ function App() {
                     <h2>List of new todos:</h2>
                     <ul>
                         {existingTasks.filter((task) => task.status === 'new').map((task) => (
-                            <li key={task.id} className={selectedTasks[task.id] ? "todo-item selected" : "todo-item"}>
+                            <li key={task.id} className={task.selected ? "todo-item selected" : "todo-item"}>
                                 <span>{task.value}</span>
                                 <div className="actions">
-                                    <button type="button" onClick={() => handleSelect(task.id)}>select</button>
+                                    <button type="button" onClick={() => handleSelect(task.id, task.selected)}>select</button>
                                     <select className="custom-select" name="selectStatus" defaultValue="new" value={task.status} onChange={(e) => handleChangeTaskStatus(e, task.id)}>
                                         <option value="new">New</option>
                                         <option value="in progress">In progress</option>
@@ -93,11 +94,11 @@ function App() {
                     <h2>List of in progress todos:</h2>
                     <ul>
                         {existingTasks.filter((task) => task.status === 'in progress').map(inProgressTask => (
-                            <li key={inProgressTask.id} className={selectedTasks[inProgressTask.id] ? "todo-item selected" : "todo-item"}>
+                            <li key={inProgressTask.id} className={inProgressTask.selected ? "todo-item selected" : "todo-item"}>
                                 <span>{inProgressTask.value}</span>
                                 <div className="actions">
-                                    <button type="button" onClick={() => handleSelect(inProgressTask.id)}>select</button>
-                                    <select className="custom-select" name="selectStatus" defaultValue="new" value={inProgressTask.status} onChange={(e) => handleChangeTaskStatus(e, inProgressTask.id)}>
+                                    <button type="button" onClick={() => handleSelect(inProgressTask.id, inProgressTask.selected)}>select</button>
+                                    <select className="custom-select" name="selectStatus" value={inProgressTask.status} onChange={(e) => handleChangeTaskStatus(e, inProgressTask.id)}>
                                         <option value="new">New</option>
                                         <option value="in progress">In progress</option>
                                         <option value="done">Done</option>
@@ -113,11 +114,11 @@ function App() {
                     <h2>List of done:</h2>
                     <ul>
                         {existingTasks.filter((task) => task.status === 'done').map(doneTask => (
-                            <li key={doneTask.id} className={selectedTasks[doneTask.id] ? "todo-item selected" : "todo-item"}>
+                            <li key={doneTask.id} className={doneTask.selected ? "todo-item selected" : "todo-item"}>
                                 <span>{doneTask.value}</span>
                                 <div className="actions">
-                                    <button type="button" onClick={() => handleSelect(doneTask.id)}>select</button>
-                                    <select className="custom-select" name="selectStatus" defaultValue="new" value={doneTask.status} onChange={(e) => handleChangeTaskStatus(e, doneTask.id)}>
+                                    <button type="button" onClick={() => handleSelect(doneTask.id, doneTask.selected)}>select</button>
+                                    <select className="custom-select" name="selectStatus" value={doneTask.status} onChange={(e) => handleChangeTaskStatus(e, doneTask.id)}>
                                         <option value="new">New</option>
                                         <option value="in progress">In progress</option>
                                         <option value="done">Done</option>
