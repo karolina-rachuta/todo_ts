@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
+import { isTaskStatus } from './utils/isTaskStatus';
 
 
 //Theme
-type TaskStatus = 'new' | 'in progress' | 'done' //3 columns
+export type TaskStatus = 'new' | 'in progress' | 'done' //3 columns
 
 type Task = {
     id: string,
@@ -37,9 +38,11 @@ function App() {
     }
 
     function handleChangeTaskStatus(e: React.ChangeEvent<HTMLSelectElement>, taskId: string): void {
-        const newStatus = e.target.value as TaskStatus;
-        setExistingTasks(prev => prev.map((
-            task => task.id === taskId ? { ...task, status: newStatus } : task)))
+        const newStatus = e.target.value;
+        if (isTaskStatus(newStatus)) {
+            setExistingTasks(prev => prev.map((
+                task => task.id === taskId ? { ...task, status: newStatus } : task)))
+        }
     }
 
 
