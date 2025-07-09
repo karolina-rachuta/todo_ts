@@ -20,7 +20,7 @@ type SelectedTasks = Record<string, boolean>
 function App() {
     const [task, setTask] = useState<Task | null>(null);
     const [existingTasks, setExistingTasks] = useState<Task[]>([]);
-    const [selectedTasks, setSelectedTasks] = useState<SelectedTasks>({});
+    //const [selectedTasks, setSelectedTasks] = useState<SelectedTasks>({});
 
 
 
@@ -48,8 +48,8 @@ function App() {
         setExistingTasks(prev => prev.filter((task) => task.id !== idToDelete)); //what is the difference // based on what was previously there
     }
 
-    function handleSelectAll() {
-
+    function handleDeleteAll() {
+        setExistingTasks([])
     }
 
     return (
@@ -129,7 +129,9 @@ function App() {
                         ))}
                     </ul>
                 </div>
+
             </div>
+            <button type="button" className="deleteAll" onClick={handleDeleteAll}>Delete all</button>
         </div>
     );
 }
