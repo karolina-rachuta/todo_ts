@@ -26,7 +26,7 @@ function App() {
 
     function handleAddingNote(): void {
         if (!task) return;
-        setExistingTasks([...existingTasks, task]);
+        setExistingTasks(prev => [...prev, task]);
         setTask(null);
 
     }
@@ -78,7 +78,7 @@ function App() {
                                 <span>{task.value}</span>
                                 <div className="actions">
                                     <button type="button" onClick={() => handleSelect(task.id, task.selected)}>select</button>
-                                    <select className="custom-select" name="selectStatus" defaultValue="new" value={task.status} onChange={(e) => handleChangeTaskStatus(e, task.id)}>
+                                    <select className="custom-select" name="selectStatus" value={task.status} onChange={(e) => handleChangeTaskStatus(e, task.id)}>
                                         <option value="new">New</option>
                                         <option value="in progress">In progress</option>
                                         <option value="done">Done</option>
