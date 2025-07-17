@@ -65,6 +65,7 @@ function App() {
                     // value={task?.value ?? ''}
                     value={task ? task.value : ''}
                     onChange={(e) => setTask({ ...task, value: e.target.value, id: uuidv4(), status: 'new', selected: false })}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { handleAddingNote() } }}
                 />
                 <button type="button" onClick={handleAddingNote}>Add</button>
             </div>
@@ -78,7 +79,7 @@ function App() {
                                 <span>{task.value}</span>
                                 <div className="actions">
                                     <button type="button" onClick={() => handleSelect(task.id, task.selected)}>select</button>
-                                    <select className="custom-select" name="selectStatus" defaultValue="new" value={task.status} onChange={(e) => handleChangeTaskStatus(e, task.id)}>
+                                    <select className="custom-select" name="selectStatus" value={task.status} onChange={(e) => handleChangeTaskStatus(e, task.id)}>
                                         <option value="new">New</option>
                                         <option value="in progress">In progress</option>
                                         <option value="done">Done</option>
