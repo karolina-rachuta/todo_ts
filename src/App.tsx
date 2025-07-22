@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { isTaskStatus } from "./utils/isTaskStatus";
 import TaskColumn from "./components/TaskColumn";
 
@@ -54,11 +54,18 @@ function App() {
     setExistingTasks([]);
   }
 
-  const todoTasks = existingTasks.filter((task) => task.status === "new");
-  const inProgressTasks = existingTasks.filter(
-    (task) => task.status === "in progress",
+  const todoTasks = useMemo(
+    () => existingTasks.filter((task) => task.status === "new"),
+    [existingTasks],
   );
-  const doneTasks = existingTasks.filter((task) => task.status === "done");
+  const inProgressTasks = useMemo(
+    () => existingTasks.filter((task) => task.status === "in progress"),
+    [existingTasks],
+  );
+  const doneTasks = useMemo(
+    () => existingTasks.filter((task) => task.status === "done"),
+    [existingTasks],
+  );
 
   return (
     <div className="app-container">
