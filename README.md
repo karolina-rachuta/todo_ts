@@ -2,5 +2,5 @@
 
 ## Tech Stack
 
--   Typescript
--   CSS
+- Typescript
+- CSS

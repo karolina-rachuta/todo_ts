@@ -1,7 +1,7 @@
-import { TaskStatus } from '../App';
+import { TaskStatus } from "../App";
 
-const TASK_STATUSES: TaskStatus[] = ['new', 'in progress', 'done'];
+const TASK_STATUSES: TaskStatus[] = ["new", "in progress", "done"];
 
 export const isTaskStatus = (status: string): status is TaskStatus => {
-    return TASK_STATUSES.findIndex((t) => t === status) > -1;
+  return TASK_STATUSES.findIndex((t) => t === status) > -1;
 };
