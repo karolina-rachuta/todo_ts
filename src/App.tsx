@@ -57,6 +57,30 @@ function App() {
         setExistingTasks((prev) => prev.filter((task) => task.id !== idToDelete));
     }
 
+    function handleChangeStatusOfSelected(): void {
+        setExistingTasks(prev => prev.map((task) => {
+            if (!task.selected) return task;
+            let newStatus: TaskStatus;
+            switch (task.status) {
+                case "new":
+                    newStatus = "in progress";
+                    break;
+                case "in progress":
+                    newStatus = "done";
+                    break;
+                case "done":
+                    newStatus = "new";
+                    break;
+            }
+            return { ...task, status: newStatus }
+        }
+        ))
+    }
+
+    function handleDeleteSelected(): void {
+        setExistingTasks(prev => prev.filter(task => !task.selected))
+    }
+
     function handleDeleteAll() {
         setExistingTasks([]);
     }
@@ -133,10 +157,19 @@ function App() {
                     onChangeTaskStatus={handleChangeTaskStatus}
                 />
             </div>
-            <button type="button" className="deleteAll" onClick={handleDeleteAll}>
-                Delete all
-            </button>
+            <div className="button_container">
+                <button type="button" className="changeStatus" onClick={handleChangeStatusOfSelected}>
+                    Change status
+                </button>
+                <button type="button" className="deleteSelected" onClick={handleDeleteSelected}>
+                    Delete selected
+                </button>
+                <button type="button" className="deleteAll" onClick={handleDeleteAll}>
+                    Delete all
+                </button>
+            </div>
         </div>
     );
 }
+
 export default App;
