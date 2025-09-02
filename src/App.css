@@ -3,6 +3,10 @@
     --text-color: #333;
     --card-bg: #ffffff;
     --button: #0e2b4a;
+    --bg-color: #f2f2f2;
+    --text-color: #333;
+    --card-bg: #ffffff;
+    --button: #0e2b4a;
 }
 
 body[data-theme='dark'] {
@@ -13,6 +17,9 @@ body[data-theme='dark'] {
 }
 
 * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -31,10 +38,22 @@ body {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
 
 /* Input Section */
 .input-section {
+    background: var(--card-bg); /* zmienione */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     background: var(--card-bg);
     padding: 20px;
     border-radius: 12px;
@@ -48,13 +67,21 @@ body {
 .input-section h1 {
     font-size: 24px;
     color: #007bff;
+    font-size: 24px;
+    color: #007bff;
 }
 
 .input-section label {
     font-weight: 600;
+    font-weight: 600;
 }
 
 .input-section input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -74,23 +101,43 @@ body {
         background-color 0.2s ease,
         transform 0.1s ease;
     align-self: flex-start;
+    background-color: #3885d7;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
+    align-self: flex-start;
 }
 
 .input-section .title-section button {
+    background-color: var(--button);
     background-color: var(--button);
 }
 
 .input-section div {
     display: flex;
     gap: 30px;
+    display: flex;
+    gap: 30px;
 }
 .input-section button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
     background-color: #0056b3;
     transform: translateY(-1px);
 }
 
 /* Todos Section */
 .todos-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -105,15 +152,28 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     flex: 1 1 30%;
     min-width: 280px;
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    flex: 1 1 30%;
+    min-width: 280px;
 }
 
 .task-column h2 {
     font-size: 18px;
     margin-bottom: 12px;
     color: var(--text-color);
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: var(--text-color);
 }
 
 .task-column ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -167,15 +227,27 @@ body {
     transition:
         background-color 0.2s ease,
         transform 0.1s ease;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition:
+        background-color 0.2s ease,
+        transform 0.1s ease;
 }
 
 /* Select button */
 .actions button:nth-child(1) {
     background-color: #17a2b8;
     color: white;
+    background-color: #17a2b8;
+    color: white;
 }
 
 .actions button:nth-child(1):hover {
+    background-color: #138496;
+    transform: translateY(-1px);
     background-color: #138496;
     transform: translateY(-1px);
 }
@@ -187,15 +259,24 @@ body {
     border: 1px solid #ccc;
     font-size: 14px;
     background-color: #fff;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fff;
 }
 
 /* Delete button */
 .actions button:nth-child(3) {
     background-color: #dc3545;
     color: white;
+    background-color: #dc3545;
+    color: white;
 }
 
 .actions button:nth-child(3):hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
     background-color: #c82333;
     transform: translateY(-1px);
 }
@@ -205,7 +286,13 @@ body {
     .todos-section {
         flex-direction: column;
     }
+    .todos-section {
+        flex-direction: column;
+    }
 
+    .task-column {
+        width: 100%;
+    }
     .task-column {
         width: 100%;
     }
@@ -217,21 +304,40 @@ body {
     }
 }
 
-.deleteAll {
-    background-color: #cb4e5a;
-    color: white;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    width: 100px;
-    transition:
-        background-color 0.2s ease,
-        transform 0.1s ease;
-}
+.button_container {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
 
-.deleteAll:hover {
-    background-color: #c82333;
-    transform: translateY(-1px);
+    .changeStatus,
+    .deleteSelected,
+    .deleteAll {
+        color: white;
+        padding: 6px 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 100px;
+        transition:
+            background-color 0.2s ease,
+            transform 0.1s ease;
+    }
+
+    .changeStatus {
+        background-color: #3885d7;
+    }
+    .changeStatus:hover {
+        background-color: #0056b3;
+    }
+    .deleteSelected,
+    .deleteAll {
+        background-color: #cb4e5a;
+    }
+    .deleteSelected:hover,
+    .deleteAll:hover {
+        background-color: #c82333;
+        transform: translateY(-1px);
+    }
 }
